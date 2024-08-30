@@ -14,7 +14,7 @@ namespace constants {
 	return getRandomValueInRange(1, constants::dyceSides);
 }
 
-void printArray(const int* const arr, const std::size_t size) {
+void printArray(const int* const arr, const std::size_t size) noexcept {
 	for (std::size_t i = 0; i < size; ++i) {
 		std::cout << arr[i] << ' ';
 	}
