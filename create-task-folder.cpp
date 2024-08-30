@@ -1,6 +1,7 @@
 #include<iostream>
 #include<algorithm>
 #include<filesystem>
+#include<fstream>
 #include<string>
 #include<string_view>
 #include<regex>
@@ -11,7 +12,16 @@ namespace fs = std::filesystem;
 
 namespace constants {
 	constexpr std::string_view rootDirPath { "./" };
+
 	constexpr std::string_view taskDirName { "task-" }; 
+	constexpr std::string_view taskDirMainFileName { "main.cpp" }; 
+	constexpr std::string_view taskDirMainFileContent {
+		"#include<iostream>\n\n"
+		"int main() {\n\n"
+		"\treturn 0;\n"
+		"}\n"
+	}; 
+
 	constexpr int initialTaskNum { 0 }; 
 }
 
@@ -82,7 +92,7 @@ namespace constants {
 	return taskDirNames;
 }
 
-int main() {
+[[nodiscard]] std::string getNextTaskDirName() {
 	std::vector<std::string> taskDirNames { getTaskDirNames() };
 
 	std::string nextTaskDirName { constants::taskDirName };
@@ -92,9 +102,24 @@ int main() {
 		nextTaskDirNum = getTaskDirNum(taskDirNames.back()) + 1;
 	}
 
-	nextTaskDirName += std::to_string(nextTaskDirNum);
+	return nextTaskDirName + std::to_string(nextTaskDirNum);
+}
+
+void createMainFileForNextTaskDir(const std::string_view nextTaskDirName) {
+	std::string mainFilePath { nextTaskDirName };
+	mainFilePath += '/';
+	mainFilePath += constants::taskDirMainFileName;
+
+	std::ofstream mainFile{ mainFilePath };
+
+	mainFile << constants::taskDirMainFileContent;
+}
+
+int main() {
+	std::string nextTaskDirName { getNextTaskDirName() };
 	
 	fs::create_directory(nextTaskDirName);
+	createMainFileForNextTaskDir(nextTaskDirName);
 
 	return 0;
 }
