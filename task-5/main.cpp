@@ -84,7 +84,7 @@ void clearInputBuffer() {
 	std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 }
 
-[[nodiscard]] std::size_t getSizeTInput(const char* const outputText) {
+[[nodiscard]] std::size_t getSizeInput(const char* const outputText) {
 	std::size_t input {};
 	bool repeatLoop {};
 
@@ -109,8 +109,8 @@ void clearInputBuffer() {
 }
 
 int main() {
-	const std::size_t rows { getSizeTInput("Unesite broj redova: ") };
-	const std::size_t cols { getSizeTInput("Unesite broj kolona: ") };
+	const std::size_t rows { getSizeInput("Unesite broj redova: ") };
+	const std::size_t cols { getSizeInput("Unesite broj kolona: ") };
 
 	int** randomValuesMatrix{ createMatrix(rows, cols) };
 	int** maxRowValuesMatrix{ createMatrix(rows, cols) };
