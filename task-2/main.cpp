@@ -32,17 +32,15 @@ void printCardsDrawn(
 [[nodiscard]] bool drawCardsAndReturnAreAllEvenDrawsEvenNumbers(
 	int(&deckOfCards)[constants::totalCardsToDrawPerRound]
 ) noexcept {
-	bool allCardsEven { true };
-
 	for (std::size_t i = 0; i < std::size(deckOfCards); ++i) {
 		deckOfCards[i] = drawCard();
 		
 		if (i % 2 != 0 && deckOfCards[i] % 2 != 0) {
-			allCardsEven = false;
+			return false;
 		}
 	}
 
-	return allCardsEven;
+	return true;
 }
 
 int main() {

@@ -7,7 +7,7 @@
 }
 
 [[nodiscard]] int** createMatrix(const std::size_t rows, const std::size_t cols) {
-	int** matrix { new int*[rows] {} };
+	int** const matrix { new int*[rows] {} };
 
 	for (std::size_t i = 0; i < rows; ++i) {
 		matrix[i] = new int[cols] {};
@@ -58,7 +58,7 @@ void fillMatrixRowsWithMaxValueFromOtherMatrixRows(
 	const std::size_t cols
 ) noexcept {
 	for (std::size_t i = 0; i < rows; ++i) {
-		std::size_t maxValCol { getIndexFromArrayMaxValue(matrixSrc[i], cols) };
+		const std::size_t maxValCol { getIndexFromArrayMaxValue(matrixSrc[i], cols) };
 		
 		for (std::size_t ii = 0; ii < cols; ++ii) {
 			matrixDest[i][ii] = matrixSrc[i][maxValCol];
@@ -109,8 +109,8 @@ void clearInputBuffer() {
 }
 
 int main() {
-	std::size_t rows { getSizeTInput("Unesite broj redova: ") };
-	std::size_t cols { getSizeTInput("Unesite broj kolona: ") };
+	const std::size_t rows { getSizeTInput("Unesite broj redova: ") };
+	const std::size_t cols { getSizeTInput("Unesite broj kolona: ") };
 
 	int** randomValuesMatrix{ createMatrix(rows, cols) };
 	int** maxRowValuesMatrix{ createMatrix(rows, cols) };

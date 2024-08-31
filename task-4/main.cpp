@@ -33,13 +33,13 @@ namespace constants {
 }
 
 [[nodiscard]] char* getRandomKartaVrijednost() noexcept {
-	std::size_t index = getRandomValueInRange(0, std::size(constants::moguceVrijednosti) - 1);
+	const std::size_t index = getRandomValueInRange(0, std::size(constants::moguceVrijednosti) - 1);
 
 	return getNizKaraktera(*(constants::moguceVrijednosti + index));
 }
 
 [[nodiscard]] char* getRandomKartaZnak() noexcept {
-	std::size_t index = getRandomValueInRange(0, std::size(constants::moguciZnakovi) - 1);
+	const std::size_t index = getRandomValueInRange(0, std::size(constants::moguciZnakovi) - 1);
 
 	return getNizKaraktera(*(constants::moguciZnakovi + index));
 }
