@@ -5,6 +5,7 @@
 
 namespace constants {
 	constexpr std::size_t cardsSize { 52 };
+	constexpr int numberOfDraws { 3 };
 	constexpr const char* const moguciZnakovi[] = {
 		"tref",
 		"karo",
@@ -81,32 +82,34 @@ void setCardInfo(Karta& card, const char* const znak, const char* const vrijedno
 	card.vrijednost = getNizKaraktera(vrijednost);
 }
 
-void initializeCards(Karta(&cards)[constants::cardsSize]) noexcept {
+void initializeCards(Karta* const cards) noexcept {
 	std::size_t cardsIndex { 0 };
 
-	for (auto znak: constants::moguciZnakovi) {
-		for (auto vrijednost: constants::moguceVrijednosti) {
+	for (auto znak : constants::moguciZnakovi) {
+		for (auto vrijednost : constants::moguceVrijednosti) {
 			setCardInfo(*(cards + cardsIndex), znak, vrijednost);		
 			++cardsIndex;
 		}
 	}	
 }
 
-void deallocateAllCardsData(Karta(&cards)[constants::cardsSize]) noexcept {
-	for (auto& card : cards) {
-		card.dealociraj();	
+void deallocateAllCardsData(Karta*& cards) noexcept {
+	for (std::size_t i = 0; i < constants::cardsSize; ++i) {
+		(cards + i)->dealociraj();	
 	}
+	delete[] cards;
+	cards = nullptr;
 }
 
 void draw5Cards(
-	Karta(&cards)[constants::cardsSize],
+	Karta* const cards,
 	bool (&hasCardBeenDrawn)[constants::cardsSize]
 ) {
 	std::size_t index {};
 
 	for (int i = 0; i < 5; ++i) {
 		do {
-			index = getRandomValueInRange(0, std::size(cards) - 1);
+			index = getRandomValueInRange(0, constants::cardsSize - 1);
 		} while(*(hasCardBeenDrawn + index));
 
 		*(hasCardBeenDrawn + index) = true;
@@ -120,16 +123,16 @@ void draw5Cards(
 int main() {
 	std::srand(std::time(nullptr));
 
-	Karta cards[constants::cardsSize]{};
+	Karta* cards { new Karta[constants::cardsSize] {} };
 	bool hasCardBeenDrawn[constants::cardsSize]{ false };
 
 	initializeCards(cards);	
 
-	for (int i = 1; i <= 5; ++i) {
+	for (int i = 1; i <= constants::numberOfDraws; ++i) {
 		std::cout << "Izvlacenje " << i << ":\n";
 		draw5Cards(cards, hasCardBeenDrawn);
 
-		if (i != 5) {
+		if (i != constants::numberOfDraws) {
 			std::cout << '\n';
 		}
 	}
