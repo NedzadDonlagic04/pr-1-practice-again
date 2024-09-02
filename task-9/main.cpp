@@ -101,7 +101,7 @@ void initializeKolonijeMrava(KolonijaMrava* const kolonijeMrava) {
 
 		do {
 			gradIndex = getRandomValueInRange(0, std::size(constants::moguciGradovi) - 1);
-		} while(daLiJeGradIskoristen[gradIndex]);
+		} while(*(daLiJeGradIskoristen + gradIndex));
 
 		(kolonijeMrava + i)->unos(*(constants::moguciGradovi + gradIndex));
 
