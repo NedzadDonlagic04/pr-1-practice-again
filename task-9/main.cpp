@@ -33,8 +33,8 @@ namespace constants {
 }
 
 struct Mrav {
-    const char* tipMrava;		 // Crveni, Radnici, Faraonski, Vojnik, Medar
-    int* kolicinaHranePrenesene; // Jedan broj, u intervalu 1 - 100
+    const char* tipMrava = nullptr;			// Crveni, Radnici, Faraonski, Vojnik, Medar
+    int* kolicinaHranePrenesene = nullptr;  // Jedan broj, u intervalu 1 - 100
 
     void unos(const char* TipMrava) {
 		tipMrava = GetNizKaraktera(TipMrava);
@@ -51,7 +51,7 @@ struct Mrav {
 };
 
 struct KolonijaMrava {
-	const char* grad; // Bihac, Bosanska Otoka, Cazin, Velika Kladusa, Bosanska Krupa, Bosanski Petrovac,
+	const char* grad = nullptr; // Bihac, Bosanska Otoka, Cazin, Velika Kladusa, Bosanska Krupa, Bosanski Petrovac,
 	Mrav mravi[5];
 
 	void unos(const char* Grad) {
