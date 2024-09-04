@@ -184,6 +184,8 @@ int main() {
 
 	Konobar* konobar{ new Konobar {} };
 	konobar->unos("Nedzad Donlagic");
+	konobar->ispis();
+	std::cout << '\n';
 
 	Sto* stolovi{ generisiStolove() };
 
