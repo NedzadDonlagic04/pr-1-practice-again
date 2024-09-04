@@ -100,6 +100,8 @@ void printArray(const int* const arr, const std::size_t size) noexcept {
 }
 
 int main() {
+	std::srand(std::time(nullptr));
+
 	const std::size_t size { getSizeInput("Unesite duzinu niza: ") };
 	int* const arr { getArrayFilledWithRandomValues(size) };	
 	int** matrix { createMatrix(size, size) };
