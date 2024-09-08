@@ -1,5 +1,6 @@
 #include<iostream>
 #include<limits>
+#include<cmath>
 
 [[nodiscard]] int** createMatrix(const std::size_t rows, const std::size_t cols) {
 	int** const matrix { new int*[rows] {} };
@@ -32,80 +33,19 @@ void printMatrix(
 	}
 }
 
-void decrementTopFromMatrixPos(
-	int* const * const matrix,
-	const std::size_t rows,
-	const std::size_t cols,
-	const std::size_t targetRow,
-	const std::size_t targetCol
-) noexcept {
-	for (std::ptrdiff_t i = targetRow - 1; i >= 0; --i) {
-		matrix[i][targetCol] = std::max(matrix[i + 1][targetCol] - 1, 0);
-	}
-}
-
-void decrementBottomFromMatrixPos(
-	int* const * const matrix,
-	const std::size_t rows,
-	const std::size_t cols,
-	const std::size_t targetRow,
-	const std::size_t targetCol
-) noexcept {
-	for (std::size_t i = targetRow + 1; i < rows; ++i) {
-		matrix[i][targetCol] = std::max(matrix[i - 1][targetCol] - 1, 0);
-	}
-}
-
-void decrementLeftFromMatrixPos(
-	int* const * const matrix,
-	const std::size_t rows,
-	const std::size_t cols,
-	const std::size_t targetRow,
-	const std::size_t targetCol
-) noexcept {
-	for (std::ptrdiff_t i = targetCol - 1; i >= 0; --i) {
-		matrix[targetRow][i] = std::max(matrix[targetRow][i + 1] - 1, 0);
-	}
-}
-
-void decrementRightFromMatrixPos(
-	int* const * const matrix,
-	const std::size_t rows,
-	const std::size_t cols,
-	const std::size_t targetRow,
-	const std::size_t targetCol
-) noexcept {
-	for (std::size_t i = targetCol + 1; i < cols; ++i) {
-		matrix[targetRow][i] = std::max(matrix[targetRow][i - 1] - 1, 0);
-	}
-}
-
 void fillMatrixWithPyramidPatternFromTargetPos(
 	int* const * const matrix,
-	const std::size_t rows,
-	const std::size_t cols,
-	const std::size_t targetRow,
-	const std::size_t targetCol,
+	const std::ptrdiff_t rows,
+	const std::ptrdiff_t cols,
+	const std::ptrdiff_t targetRow,
+	const std::ptrdiff_t targetCol,
 	const int target
 ) noexcept {
-	matrix[targetRow][targetCol] = target;
-
-	// Creates a + shape with decreasing values from target
-	// and it's position
-	decrementLeftFromMatrixPos(matrix, rows, cols, targetRow, targetCol);
-	decrementRightFromMatrixPos(matrix, rows, cols, targetRow, targetCol);
-	decrementTopFromMatrixPos(matrix, rows, cols, targetRow, targetCol);
-	decrementBottomFromMatrixPos(matrix, rows, cols, targetRow, targetCol);
-
-	// Now that we have the + shape, we'll go through each row
-	// and decrement left and right from the target's col
-	for (std::size_t i = 0; i < rows; ++i) {
-		if (i == targetRow) {
-			continue;
+	for (std::ptrdiff_t i = 0; i < rows; ++i) {
+		for (std::ptrdiff_t ii = 0; ii < cols; ++ii) {
+			const std::ptrdiff_t distance = std::abs(i - targetRow) + std::abs(ii - targetCol);	
+			matrix[i][ii] = std::max(target - distance, 0l);
 		}
-
-		decrementLeftFromMatrixPos(matrix, rows, cols, i, targetCol);
-		decrementRightFromMatrixPos(matrix, rows, cols, i, targetCol);
 	}
 }
 
