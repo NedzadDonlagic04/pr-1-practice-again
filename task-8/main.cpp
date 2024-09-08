@@ -44,7 +44,7 @@ void fillMatrixWithPyramidPatternFromTargetPos(
 	for (std::ptrdiff_t i = 0; i < rows; ++i) {
 		for (std::ptrdiff_t ii = 0; ii < cols; ++ii) {
 			const std::ptrdiff_t distance = std::abs(i - targetRow) + std::abs(ii - targetCol);	
-			matrix[i][ii] = std::max(target - distance, 0l);
+			matrix[i][ii] = std::max<std::ptrdiff_t>(target - distance, 0);
 		}
 	}
 }
